@@ -1,0 +1,387 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 7% 5%;
+    --foreground: 0 0% 100%;
+    --card: 220 6% 10%;
+    --card-foreground: 0 0% 100%;
+    --popover: 220 6% 10%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 243 75% 59%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 6% 10%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 220 6% 10%;
+    --muted-foreground: 220 3% 63%;
+    --accent: 243 75% 59%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 100% / 0.06;
+    --input: 0 0% 100% / 0.06;
+    --ring: 243 75% 59%;
+    --radius: 0.75rem;
+
+    /* Brand tokens */
+    --bg: #0c0d0e;
+    --surface: #16171a;
+    --surface-light: #1e1f23;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a1a3;
+    --text-muted: #6b6c6e;
+    --accent-color: #4f46e5;
+    --accent-hover: #6366f1;
+    --border-color: rgba(255, 255, 255, 0.06);
+    --border-hover: rgba(255, 255, 255, 0.12);
+  }
+
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: auto; /* Lenis handles smooth scroll */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    /* Custom cursor — MagicalCursor component handles rendering */
+    cursor: none;
+  }
+
+  /* Restore native cursor on touch/pointer-coarse devices */
+  @media (hover: none), (pointer: coarse) {
+    body,
+    body * {
+      cursor: auto !important;
+    }
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  code, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Prevent horizontal overflow on all widths */
+  img, video, canvas, svg {
+    max-width: 100%;
+  }
+}
+
+@layer components {
+  /* ─── Typography Scale ─── */
+  .display-xl {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-size: clamp(3.5rem, 14vw, 11rem);
+    font-weight: 500;
+    line-height: 0.85;
+    letter-spacing: -0.03em;
+  }
+
+  .display-l {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    font-weight: 500;
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+  }
+
+  .display-m {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-size: clamp(1.875rem, 5vw, 3.75rem);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  .heading-text {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+
+  .body-l {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    font-weight: 400;
+    line-height: 1.65;
+  }
+
+  .body {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    line-height: 1.65;
+  }
+
+  .caption-text {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .mono-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  /* ─── Cards ─── */
+  .card-base {
+    background-color: var(--surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    /* Use transform + opacity only — avoids layout reflows */
+    transition: border-color 0.3s ease, transform 0.35s ease, box-shadow 0.35s ease;
+  }
+
+  /* Only apply hover lift on true pointer devices */
+  @media (hover: hover) {
+    .card-base:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-5px);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  /* ─── Buttons ─── */
+  .btn-primary {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 0.8125rem 1.875rem;
+    border-radius: 0.5rem;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    /* GPU-only transitions */
+    transition: transform 0.2s ease, filter 0.2s ease;
+    white-space: nowrap;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  @media (hover: hover) {
+    .btn-primary:hover {
+      transform: scale(1.03);
+      filter: brightness(1.12);
+    }
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--text-primary);
+    padding: 0.8125rem 1.875rem;
+    border-radius: 0.5rem;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    border: 1px solid var(--border-color);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    white-space: nowrap;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  @media (hover: hover) {
+    .btn-secondary:hover {
+      border-color: var(--border-hover);
+      background-color: rgba(255, 255, 255, 0.03);
+    }
+  }
+
+  .pill-btn {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 0.5rem 1.25rem;
+    border-radius: 9999px;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 0.8125rem;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s ease, filter 0.2s ease;
+  }
+
+  @media (hover: hover) {
+    .pill-btn:hover {
+      transform: scale(1.03);
+      filter: brightness(1.1);
+    }
+  }
+
+  /* ─── Glow ring ─── */
+  .glow-ring {
+    box-shadow:
+      0 0 60px rgba(79, 70, 229, 0.2),
+      0 0 120px rgba(79, 70, 229, 0.1),
+      inset 0 0 60px rgba(79, 70, 229, 0.05);
+    animation: glow-pulse 4s ease-in-out infinite;
+  }
+
+  .section-label {
+    color: var(--accent-color);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Layout containers */
+  .content-max {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: clamp(1rem, 5vw, 2rem);
+    padding-right: clamp(1rem, 5vw, 2rem);
+  }
+
+  .content-narrow {
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: clamp(1rem, 5vw, 2rem);
+    padding-right: clamp(1rem, 5vw, 2rem);
+  }
+
+  /* Hide native scrollbar while keeping scroll functionality */
+  .scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ─── Keyframe Animations ─── */
+
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 60px rgba(79, 70, 229, 0.2),
+      0 0 120px rgba(79, 70, 229, 0.1),
+      inset 0 0 60px rgba(79, 70, 229, 0.05);
+  }
+  50% {
+    box-shadow:
+      0 0 80px rgba(79, 70, 229, 0.3),
+      0 0 160px rgba(79, 70, 229, 0.15),
+      inset 0 0 80px rgba(79, 70, 229, 0.08);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.scroll-indicator {
+  animation: float 1.5s ease-in-out infinite;
+}
+
+/* ─── Responsive Typography Helpers ─── */
+
+/* Ultra-wide screens (2560px+) */
+@media (min-width: 2560px) {
+  .content-max { max-width: 1600px; }
+}
+
+/* Tablet-specific adjustments */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .display-xl { font-size: clamp(3rem, 12vw, 8rem); }
+}
+
+/* Mobile: reduce heavy shadows for GPU headroom */
+@media (max-width: 767px) {
+  .glow-ring {
+    box-shadow: 0 0 40px rgba(79, 70, 229, 0.2), inset 0 0 40px rgba(79, 70, 229, 0.05);
+    animation: none; /* Remove pulsing glow on mobile for perf */
+  }
+
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+}
+
+/* ─── Accessibility: Reduced Motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Focus Styles ─── */
+:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ─── Print ─── */
+@media print {
+  .StarfieldBackground,
+  .MagicalCursor,
+  nav {
+    display: none !important;
+  }
+  body {
+    background: white;
+    color: black;
+    cursor: auto;
+  }
+}
